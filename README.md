@@ -1,0 +1,2 @@
+# Educare
+Minor project 
