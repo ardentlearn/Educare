@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Profile{% endblock title %}
+
+{% block content %}
+
+<form action="" method="post">
+{% csrf_token %}
+
+    {% if form.errors %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{form.errors}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+    
+    
+    {{form.email.label}}
+    {{form.email}}
+
+    <br>
+
+    {{form.first_name.label}}
+    {{form.first_name}}
+
+    <br>
+
+    {{form.last_name.label}}
+    {{form.last_name}}
+    <br>
+
+    {{form.password1.label}}
+    {{form.password1}}
+    <br>
+
+    {{form.password2.label}}
+    {{form.password2}}
+
+    <br>
+
+    <button type="submit">Submit</button>
+
+</form>
+
+{% endblock content %}
