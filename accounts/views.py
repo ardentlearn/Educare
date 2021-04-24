@@ -2,19 +2,19 @@ from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-from .forms import CreateUserForm
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from django.views.generic import UpdateView, CreateView, TemplateView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.views import LoginView
+from django.urls import reverse_lazy
 from .models import User
+from .forms import CreateUserForm
 
 
 class HomePageView(TemplateView):
-    template_name = 'home.html'
+    template_name = "home.html"
 
 
 class RegistrationPageView(CreateView):
-    template_name = 'accounts/registration.html'
+    template_name = "accounts/registration.html"
     form_class = CreateUserForm
 
     def form_valid(self, form):
@@ -23,35 +23,18 @@ class RegistrationPageView(CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
-        return reverse('accounts:login')
+        return reverse("accounts:login")
 
+class CustomLoginView(LoginView):
+    template_name = "accounts/login.html"
+    fields = '__all__'
+    redirect_authenticated_user = True
 
-def login_page(request):
-    if request.user.is_authenticated:
-        return redirect('/')
-    else:
-        if request.method == 'POST':
-            email = request.POST.get('email')
-            password = request.POST.get('password')
-
-            user = authenticate(request, email=email, password=password)
-
-            if user is not None:
-                login(request, user)
-                return redirect('/')
-            else:
-                messages.error(request, "Invalid credentials")
-
-        return render(request, 'accounts/login.html')
-
-
-def logout_page(request):
-    logout(request)
-    return redirect('/')
-
+    def get_success_url(self):
+        return reverse_lazy("home")
 
 class UserUpdateView(UpdateView):
-    template_name = 'accounts/profile.html'
+    template_name = "accounts/profile.html"
     form_class = CreateUserForm
     queryset = User.objects.all()
 
@@ -61,4 +44,4 @@ class UserUpdateView(UpdateView):
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
-        return reverse('home')
+        return reverse("home")

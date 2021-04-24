@@ -4,6 +4,11 @@
 
 {% block content %}
 
-<h1 class = "text-center">Educare</h1>
+
+{% for message in messages %}
+<p>{{message}}</p>
+{% endfor %}
+
+<h1>Educare</h1>
 
 {% endblock content %}
