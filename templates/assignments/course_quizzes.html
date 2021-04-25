@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Course{% endblock title %}
+
+{% block content %}
+
+
+<h1>{{course_name}}</h1>
+
+<h2>Quizzes</h2>
+
+{% if request.user.is_superuser %}
+{% comment %}
+<a type="button" href="{% url 'assignments:create-quiz' course_id %}">Create new
+  quiz </a>
+{% endcomment %}
+{% endif %}
+<hr>
+
+{% for quiz in quizzes %}
+<a href="{% url 'assignments:attempt-quiz' course_name course_id  quiz.pk %}">
+  <h5>{{quiz}}</h5>
+</a>
+
+{% empty %}
+<p>
+  Looks like there are no quizzes at the movement...
+</p>
+{% endfor %}
+
+{% endblock content %}

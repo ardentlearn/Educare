@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Quiz{% endblock title %}
+
+{% block content %}
+
+<h1>Quiz</h1>
+
+{% if request.user.is_superuser %}
+<a type="button" href="{% url 'assignments:question-add' pk%}">Add
+  questions</a>
+{% endif %}
+
+
+<hr>
+<div>
+  <p id="result"></p>
+</div>
+<br>
+<form action="" method="post" id="postData">
+
+  {% csrf_token %}
+
+  {% for question in questions %}
+  <p>Q{{forloop.counter}}.{{question.question_id.question_description}}</p>
+
+  {% if question.question_id.question_image_address %}
+  <div>
+    <img src="{{question.question_id.question_image_address.url}}" alt="Image">
+  </div>
+  {% endif %}
+  <input type="radio" id="choice_{{question.question_id.question_id}}_1" name="{{question.question_id.question_id}}"
+    value="1">
+  <label for="choice_{{question.question_id.question_id}}_1">{{question.question_id.choice_1}}</label><br>
+  <input type="radio" id="choice_{{question.question_id.question_id}}_2" name="{{question.question_id.question_id}}"
+    value="2">
+  <label for="choice_{{question.question_id.question_id}}_2">{{question.question_id.choice_2}}</label><br>
+  <input type="radio" id="choice_{{question.question_id.question_id}}_3" name="{{question.question_id.question_id}}"
+    value="3">
+  <label for="choice_{{question.question_id.question_id}}_3">{{question.question_id.choice_3}}</label><br>
+  <input type="radio" id="choice_{{question.question_id.question_id}}_4" name="{{question.question_id.question_id}}"
+    value="4">
+  <label for="choice_{{question.question_id.question_id}}_4">{{question.question_id.choice_4}}</label><br>
+
+  <br>
+
+  {% if request.user.is_superuser %}
+  <div>
+    <a href="{% url 'assignments:question-update' question.question_id.pk %}">Update</a>
+  </div>
+  {% endif %}
+  <span hidden id={{question.question_id.question_id}}></span>
+
+  <br><br>
+
+  {% empty %}
+  <p>
+    Looks like there are no questions at the movement...
+  </p>
+  {% endfor %}
+
+  {% if questions %}
+  <button type="submit" id="submit">Submit</button>
+  {% endif %}
+
+
+</form>
+
+
+<script src="{% static 'js/attempt_quiz.min.js' %}"></script>
+
+{% endblock content %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+
+{% for msg in messages %}
+<p>{{msg}}</p>
+{% endfor %}
+
+
+<h1>Courses</h1>
+<hr>
+
+
+{% for course in courses %}
+
+
+<a href="{% url 'assignments:course-quizzes' course.pk %}">
+  <h5>{{course}}</h5>
+</a>
+<br>
+{%empty %}
+<p>No courses to list</p>
+{% endfor %}
+
+
+{% endblock content %}

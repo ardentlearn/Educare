@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Question Update{% endblock title %}
+
+{% block content %}
+
+
+<p>Question Update</p>
+<hr>
+
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{form.as_p}}
+
+    <button type="submit">Submit</button>
+
+    {% if request.user.is_superuser %}
+    <a href="{% url 'assignments:question-delete' question.pk %}">Delete</a>
+    {% endif %}
+
+</form>
+
+{% endblock content %}
