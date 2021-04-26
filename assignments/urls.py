@@ -14,6 +14,7 @@ urlpatterns = [
     #     views.CreateQuizView.as_view(),
     #     name="create-quiz",
     # ),
+    path("results/", views.ResultsView.as_view(), name="results"),
     path(
         "attempt/<str:couse_name>/<int:course_id>/<int:pk>/",
         views.AttemptQuizView.as_view(),

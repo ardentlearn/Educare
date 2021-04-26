@@ -37,7 +37,7 @@ class Results(models.Model):
     quiz_id = models.ForeignKey('Quiz', on_delete=models.CASCADE)
     results_id = models.AutoField(primary_key=True)
     course_id = models.ForeignKey(Course, on_delete=models.CASCADE)
-    date = models.DateTimeField(blank=True, null=True)
+    date = models.DateTimeField(blank=True, null=True, auto_now_add= True)
     score = models.IntegerField(blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 

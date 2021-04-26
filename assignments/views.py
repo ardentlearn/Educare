@@ -55,18 +55,30 @@ class AttemptQuizView(LoginRequiredMixin, TemplateView):
         return data
 
     def post(self, request, **kwargs):
-        score = 0
-        data = json.loads(request.body)
-        response_data = {}
+        try:
+            score = 0
+            data = json.loads(request.body)
+            response_data = {}
 
-        for key, value in data.items():
-            if key.isdigit():
-                correct_answer = Questions.objects.get(pk=key).correct_choice
-                response_data[key] = correct_answer
-                if value != "none" and int(value) == correct_answer:
-                    score += 1
+            for key, value in data.items():
+                if key.isdigit():
+                    correct_answer = Questions.objects.get(pk=key).correct_choice
+                    response_data[key] = correct_answer
+                    if value != "none" and int(value) == correct_answer:
+                        score += 1
 
-        response_data["score"] = score
+            response_data["score"] = score
+
+            Results.objects.create(
+                quiz_id=Quiz.objects.get(quiz_id=self.kwargs.get("pk")),
+                course_id=Course.objects.get(course_id=self.kwargs.get("course_id")),
+                score=score,
+                user=request.user,
+            )
+
+        except Exception as e:
+            print(e)
+
         return JsonResponse(response_data)
 
 
@@ -106,3 +118,12 @@ class QuestionsAddView(SuperUserRequiredMixin, LoginRequiredMixin, CreateView):
             messages.error(self.request, "An error occurred")
 
         return self.request.path
+
+
+class ResultsView(LoginRequiredMixin, ListView):
+    template_name = "assignments/results.html"
+    model = Results
+    context_object_name = "results"
+
+    def get_queryset(self):
+        return Results.objects.filter(user=self.request.user)

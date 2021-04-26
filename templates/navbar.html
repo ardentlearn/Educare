@@ -27,6 +27,7 @@
     </div>
 
     {% if request.user.is_authenticated %}
+    <span class="mx-3"><a class = "text-white pe-3" href="{% url 'assignments:results' %}">Performance</a></span>
     <span class = "me-5"><a class = "text-white pe-3" href="{% url 'accounts:profile' request.user.pk %}">{{request.user}}</a></span>
     <span ><a class = "text-white pe-3" href= "{% url 'accounts:logout' %}">Logout</a></span>
     
