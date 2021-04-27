@@ -13,7 +13,7 @@ from django.views.generic import (
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
-from .forms import QuestionUpdateForm
+from .forms import QuestionUpdateForm, CreateQuizForm
 from courses.models import Course
 import json
 
@@ -88,18 +88,39 @@ class QuestionUpdateView(SuperUserRequiredMixin, LoginRequiredMixin, UpdateView)
     queryset = Questions.objects.all()
     context_object_name = "question"
 
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data["course_id"] = self.kwargs.get("course_id")
+        data["quiz_id"] = self.kwargs.get("quiz_id")
+        return data
+
     def get_success_url(self):
         messages.success(self.request, "Question has been updated")
-        return reverse_lazy("assignments:course-list")
+        return reverse_lazy(
+            "assignments:attempt-quiz",
+            kwargs={
+                "course_id": self.kwargs.get("course_id"),
+                "pk": self.kwargs.get("quiz_id"),
+            },
+        )
 
 
 class QuestionDeleteView(SuperUserRequiredMixin, LoginRequiredMixin, DeleteView):
     template_name = "assignments/question_delete.html"
     queryset = Questions.objects.all()
 
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs)
+
     def get_success_url(self):
         messages.success(self.request, "Deleted successfully")
-        return reverse_lazy("assignments:course-list")
+        return reverse_lazy(
+            "assignments:attempt-quiz",
+            kwargs={
+                "course_id": self.kwargs.get("course_id"),
+                "pk": self.kwargs.get("quiz_id"),
+            },
+        )
 
 
 class QuestionsAddView(SuperUserRequiredMixin, LoginRequiredMixin, CreateView):
@@ -118,6 +139,22 @@ class QuestionsAddView(SuperUserRequiredMixin, LoginRequiredMixin, CreateView):
             messages.error(self.request, "An error occurred")
 
         return self.request.path
+
+
+class CreateQuizView(SuperUserRequiredMixin, LoginRequiredMixin, CreateView):
+    template_name = "assignments/create_quiz.html"
+    form_class = CreateQuizForm
+
+    def form_valid(self, form):
+        form.instance.course_id = Course.objects.get(pk=self.kwargs.get("course_id"))
+        return super(CreateQuizView, self).form_valid(form)
+
+    def get_success_url(self):
+        messages.success(self.request, "New Quiz has been created")
+        return reverse_lazy(
+            "assignments:question-add",
+            kwargs={"pk": Quiz.objects.latest("quiz_id").quiz_id},
+        )
 
 
 class ResultsView(LoginRequiredMixin, ListView):

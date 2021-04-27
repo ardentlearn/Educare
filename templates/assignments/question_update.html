@@ -17,7 +17,7 @@
     <button type="submit">Submit</button>
 
     {% if request.user.is_superuser %}
-    <a href="{% url 'assignments:question-delete' question.pk %}">Delete</a>
+    <a href="{% url 'assignments:question-delete' course_id quiz_id question.pk %}">Delete</a>
     {% endif %}
 
 </form>

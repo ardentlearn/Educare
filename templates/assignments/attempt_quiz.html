@@ -48,7 +48,7 @@
 
   {% if request.user.is_superuser %}
   <div>
-    <a href="{% url 'assignments:question-update' question.question_id.pk %}">Update</a>
+    <a href="{% url 'assignments:question-update' course_id pk  question.question_id.pk %}">Update</a>
   </div>
   {% endif %}
   <span hidden id={{question.question_id.question_id}}></span>

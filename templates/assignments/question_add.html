@@ -6,26 +6,9 @@
 
 <div class="container">
 
-    {% for msg in messages %}
-
-    {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
-
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        {{msg}}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-
-
-    {% else %}
-
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{msg}}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-
-    {% endif %}
-
-    {% endfor %}
+{% for msg in messages %}
+<p>{{msg}}</p>
+{% endfor %}
 
 
     <p class="display-3 text-center">Add new questions</p>

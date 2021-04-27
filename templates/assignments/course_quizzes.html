@@ -10,15 +10,19 @@
 <h2>Quizzes</h2>
 
 {% if request.user.is_superuser %}
-{% comment %}
+
 <a type="button" href="{% url 'assignments:create-quiz' course_id %}">Create new
   quiz </a>
-{% endcomment %}
+
 {% endif %}
 <hr>
 
+{% for msg in messages %}
+<p>{{msg}}</p>
+{% endfor %}
+
 {% for quiz in quizzes %}
-<a href="{% url 'assignments:attempt-quiz' course_name course_id  quiz.pk %}">
+<a href="{% url 'assignments:attempt-quiz' course_id  quiz.pk %}">
   <h5>{{quiz}}</h5>
 </a>
 
