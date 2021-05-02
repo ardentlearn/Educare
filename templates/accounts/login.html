@@ -4,19 +4,31 @@
 
 {% block content %}
 
-<h1>Login</h1>
+<div class="container">
 
-{% for message in messages %}
-<p>{{message}}</p>
-{% endfor %}
+    <h1 class="text-center display-4">Login</h1>
 
-<form action="" method="post">
+    {% for message in messages %}
+    <p>{{message}}</p>
+    {% endfor %}
 
-    {% csrf_token %}
+    <form action="" method="post">
 
-    {{form.as_p}}
+        {% csrf_token %}
 
-    <button type="submit">Submit</button>
-</form>
 
+        <div class="mb-3">
+            <div class="form-label">{{form.username.label}}</div>
+            {{form.username}}
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3">
+            <div class="form-label">{{form.password.label}}</div>
+            {{form.password}}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+    </form>
+</div>
 {% endblock content %}

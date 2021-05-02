@@ -12,7 +12,28 @@
 <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
 
-    {{form.as_p}}
+        {{form.question_description.label}}
+        {{form.question_description}}
+        <br>
+        {{form.choice_1.label}}
+        {{form.choice_1}}
+        <br>
+        {{form.choice_2.label}}
+        {{form.choice_2}}
+        <br>
+        {{form.choice_3.label}}
+        {{form.choice_3}}
+        <br>
+        {{form.choice_4.label}}
+        {{form.choice_4}}
+        <br>
+        {{form.correct_choice.label}}
+        {{form.correct_choice}}
+        <br>
+        <p>Question Image</p>
+        {{form.question_image_address}}
+
+        <br>
 
     <button type="submit">Submit</button>
 
