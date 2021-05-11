@@ -8,34 +8,45 @@
 {% block content %}
 
 
-<h1>Register</h1>
+<h1 class="text-center" style="margin-top: 40px; margin-left: 700px;">Register</h1>
 
-<form action="" method="post">
-
+<form action="" method="post" class="box" style="width: 500px; padding: 40px; margin-top: 10px; position: absolute; margin-left: 800px; background: rgb(87, 241, 234)">
+    
     {% csrf_token %}
 
     {% if form.errors %}
     {{form.errors}}
     {% endif %}
 
-
+    <div class="form-row">
+    <div class="form-group mb-3">
     {{form.email.label}}
     {{form.email}}
+    </div>
     <br>
+    <div class="form-group mb-3">
     {{form.first_name.label}}
     {{form.first_name}}
+    </div>
     <br>
+    <div class="form-group mb-3">
     {{form.last_name.label}}
     {{form.last_name}}
+    </div>
     <br>
+    <div class="form-group mb-3">
     {{form.password1.label}}
     {{form.password1}}
+    </div>
     <br>
+    <div class="form-group mb-3">
     {{form.password2.label}}
     {{form.password2}}
-
-
-    <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+    <br>
+    
+    <button type="submit" class="btn btn-primary" style="margin-left: 150px">Submit</button>
+    </div>
 </form>
 
 

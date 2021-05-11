@@ -9,7 +9,9 @@ urlpatterns = [
     path("", views.HomePageView.as_view(), name="home"),
     path("accounts/", include("accounts.urls", namespace="accounts")),
     path("assignments/", include("assignments.urls", namespace="assignments")),
+    path("curriculum/", include("curriculum.urls", namespace="curriculum")),
 ]
+
 
 if settings.DEBUG == True:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

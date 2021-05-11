@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for Branch in branch_names %}
+
+<a href="{% url 'curriculum:subject_list' slug=Branch.slug %}">{{Branch.name}}</a><br><br>
+
+{% endfor %}
+
+{% endblock %}
