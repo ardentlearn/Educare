@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<p>Created on {{lessons.created_at}} by {{lessons.created_by}}</p>
+<p>Created on {{lessons.created_at}} by {{lessons.created_by}}</p><br>
 
-
-<br><br><br>
+<a href="{% url 'curriculum:lesson_update' Branch=lessons.Branch.slug subject=lessons.subject.slug slug=lessons.slug %}">Update lesson</a>
+<a href="{% url 'curriculum:lesson_delete' Branch=lessons.Branch.slug subject=lessons.subject.slug slug=lessons.slug %}">Delete lesson</a>
 
 
 {% endblock %}
