@@ -32,7 +32,6 @@ class LessonDetailView(DetailView):
     model = Lesson
     template_name = 'curriculum/lesson_detail_view.html'
 
-    template_name = 'curriculum/lesson_detail_view.html'
 
 
 class LessonCreateView(CreateView):
