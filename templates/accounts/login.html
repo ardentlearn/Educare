@@ -1,34 +1,105 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Login{% endblock title %}
 
+{% block css %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}?v=2">
+
+<style>
+    .box {
+        background-color: rgb(180, 180, 180);
+        box-align: center;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        padding: auto;
+    }
+
+    @media(max-width:998px){
+        html {
+            font-size: 85%;
+        }
+        div#box.box {
+            max-height: 350px;
+            max-width: 300px;
+        }
+    }
+    @media(max-width:768px){
+        html {
+            font-size: 75%;
+        }
+        div#box.box {
+            max-height: 320px;
+            max-width: 280px;
+        }
+    }
+    @media(max-width:566px){
+        html {
+            font-size: 65%;
+        }
+        div#box.box {
+            max-height: 300px;
+            max-width: 250px;
+        }
+    }
+    @media(max-width:397px){
+        html {
+            font-size: 55%;
+        }
+        div#box.box {
+            max-height: 280px;
+            max-width: 250px;
+        }
+    }
+</style>
+
+{% endblock css %}
+
+
 {% block content %}
 
-<div class="container">
-
-    <h1 class="text-center display-4" style="margin-top: 40px">Login</h1>
+<!-- ======= Image Section ======= -->
+<section id="Image" class="d-flex justify-content-center align-items-center">
+    <div class="container position-absolute" data-aos="zoom-in" data-aos-delay="100">
+    <div class="box" id="box" style="height: 450px; width: 380px; border-radius: 0% 10% 0% 10%">
+      
+    <h1 class="text-center display-4" style="margin-top: 20px;">Login</h1>
 
     {% for message in messages %}
     <p>{{message}}</p>
     {% endfor %}
 
-    <form action="" method="post" class="box" style="width: 400px; padding: 40px; margin-top: 10px; position: absolute; margin-left: 400px; background: rgb(87, 241, 234)">
-
-        {% csrf_token %}
-
-
-        <div class="mb-3">
-            <div class="form-label">{{form.username.label}}</div>
-            {{form.username}}
-            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-        </div>
-        <div class="mb-3">
-            <div class="form-label">{{form.password.label}}</div>
-            {{form.password}}
-        </div>
-
-        <button type="submit" class="btn btn-primary">Submit</button>
-
+    <form action="" method="post" style="width: 400px; padding: 20px; margin-top: 10px;">
+  
+            {% csrf_token %}
+    
+    
+            <div class="mb-3">
+                <div class="form-label">{{form.username.label}}</div>
+                {{form.username}}
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+                <div class="form-label">{{form.password.label}}</div>
+                {{form.password}}
+            </div>
+            <span ><a href="{% url 'password_reset' %}" class="text-dark" style="margin-left: 120px">Forgot Password</a></span>
+            <div class="text-center">
+            <button type="submit" id="sub" class="btn btn-dark mt-3">
+                Submit
+            </button>
+            </div>
+            
     </form>
-</div>
+    
+    </div>
+    </div>
+</section><!-- End Image -->
+
 {% endblock content %}

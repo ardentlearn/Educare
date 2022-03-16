@@ -22,20 +22,20 @@
         <hr style="color:#ff5722;">
 
         <!-- description -->
-        <h4 class="white-text my-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+        <!-- <h4 class="white-text my-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                   Deleniti
-                  consequuntur.</h4>
+                  consequuntur.</h4> -->
   </div>
 </header>
 {% endblock %}
 
 
 {% block content %}
-<section id="best-features" class="text-center">
-              <h2 class="mb-5 mt-5 font-weight-bold" style="color:#ff5722;">Dive Deeper</h2>
-              <!-- class row for description-->
+<section id="best-features" class="text-center" style="margin-top: 50px">
+              <!-- <h2 class="mb-5 mt-5 font-weight-bold" style="color:#ff5722;">Dive Deeper</h2>
+              class row for description
               <div class="row d-flex justify-content-center mb-4">
-                <!-- class column -->
+                class column
                 <div class="col-md-8 mb-5">
                   <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi voluptate
                                     hic
@@ -44,9 +44,22 @@
                                     est
                                     sit pariatur.</p>
                 </div>
-              </div>
+              </div> -->
               <!-- class row2 for cards -->
-              <div class="row d-flex justify-content-center mb-3">
+
+              <div class="row d-flex justify-content-center mb-3 mt-5">
+                  {% if user.is_staff or user.is_superuser %}
+
+                  <a href="{% url 'curriculum:lesson_create' Branch=subjects.Branch.slug slug=subjects.slug %}"><button type="button" class="btn btn-secondary btn-lg btn-bloc" > Add new Lesson </button> </a>
+                
+                  {% endif %}
+
+                  <div class="d-flex justify-content-end me-5" >
+                    <a href="{% url 'assignments:course-quizzes' subjects.pk %}" style="font-size:20px; color: rgb(5, 5, 5); padding-top:20px;"><button type="button" class="btn btn-primary">Assignments</button> </a>
+                  </div>
+              </div>
+
+              <div class="row d-flex justify-content-center mb-3 mt-5">
                 {% for lesson in subjects.lessons.all %}
                 <div class="col-sm-4 mb-4">
                   <div class="card box-shadow-hover">
@@ -54,25 +67,14 @@
                       <h5 class="card-title">Lesson-{{lesson.position}}: {{lesson.name}}</h5>
                       <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
                       <a href="{% url 'curriculum:lesson_detail' slug=lesson.slug subject=subjects.slug Branch=lesson.Branch.slug %}" >
-                      <button type="button" class="button-les"><span>Get Lectures</span></button>
+                      <button type="button" class="btn get-started-btn"><span>Get Lectures</span></button>
                       </a>
                     </div>
                   </div>
                 </div>
-                {% endfor %}
-                
+                {% endfor %} 
               </div>
-        <div class="row d-flex justify-content-center mb-3">
-          {% if user.is_staff or user.is_superuser %}
-           <a href="{% url 'curriculum:lesson_create' Branch=subjects.Branch.slug slug=subjects.slug %}"><button type="button" class="btn btn-success btn-lg btn-bloc" > Add new Lesson </button> </a>
-          {% endif %}
-        </div>
 
 </section>
-
-
-
-
-
 
 {%endblock%}

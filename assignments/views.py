@@ -10,11 +10,10 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from .forms import QuestionUpdateForm, CreateQuizForm
-from courses.models import Course
+from curriculum.models import Branch
 import json
 
 
@@ -25,7 +24,7 @@ class SuperUserRequiredMixin(UserPassesTestMixin):
 
 class CourseListView(ListView):
     template_name = "assignments/course_list.html"
-    model = Course
+    model = Branch
     context_object_name = "courses"
 
 
@@ -40,7 +39,7 @@ class CourseQuizzesView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data["course_name"] = Course.objects.get(pk=self.kwargs.get("pk")).course_name
+        data["course_name"] = Branch.objects.get(pk=self.kwargs.get("pk")).name
         data["course_id"] = self.kwargs.get("pk")
         return data
 
@@ -71,7 +70,7 @@ class AttemptQuizView(LoginRequiredMixin, TemplateView):
 
             Results.objects.create(
                 quiz_id=Quiz.objects.get(quiz_id=self.kwargs.get("pk")),
-                course_id=Course.objects.get(course_id=self.kwargs.get("course_id")),
+                course_id=Branch.objects.get(pk=self.kwargs.get("course_id")),
                 score=score,
                 user=request.user,
             )
@@ -146,7 +145,7 @@ class CreateQuizView(SuperUserRequiredMixin, LoginRequiredMixin, CreateView):
     form_class = CreateQuizForm
 
     def form_valid(self, form):
-        form.instance.course_id = Course.objects.get(pk=self.kwargs.get("course_id"))
+        form.instance.course_id = Branch.objects.get(pk=self.kwargs.get("course_id"))
         return super(CreateQuizView, self).form_valid(form)
 
     def get_success_url(self):
@@ -164,3 +163,18 @@ class ResultsView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Results.objects.filter(user=self.request.user)
+
+
+def quiz_delete(request, **kwargs):
+    try:
+        if request.method == "POST":
+            Quiz.objects.get(quiz_id= request.POST.get('quiz_id')).delete()
+            course_id = kwargs['course_id']
+            messages.success(request, "Quiz deleted successfully")
+        else:
+            return HttpResponse("Invalid")
+    except Exception:
+        return HttpResponse("An error occurred")
+
+    return HttpResponseRedirect(reverse_lazy("assignments:course-quizzes", kwargs= {"pk" : course_id}))
+    

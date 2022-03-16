@@ -1,25 +1,100 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
 {% block title %}Quiz{% endblock title %}
 
+{% block css %}
+
+<style>
+  @media(max-width:998px){
+        html {
+            font-size: 75%;
+        }
+        div.container {
+          max-width: 700px;
+        }
+    }
+  @media(max-width:768px){
+        html {
+            font-size: 65%;
+        }
+        div.container {
+          max-width: 550px;
+        }
+    }
+    @media(max-width:566px){
+        html {
+            font-size: 55%;
+        }
+        div.container {
+          max-width: 400px;
+        }
+    }
+    @media(max-width:397px){
+        html {
+            font-size: 50%;
+        }
+        img {
+          max-width: 200px;
+          max-height: 200px;
+        }
+        div.container {
+          max-width: 300px;
+        }
+    }
+</style>
+
+{% endblock css %}
+
 {% block content %}
 
-<h1>Quiz</h1>
+<h1 class="text-center" style="margin-top: 100px">Quiz</h1>
 
+<div class="d-flex justify-content-center">
 {% if request.user.is_superuser %}
-<a type="button" href="{% url 'assignments:question-add' pk%}">Add
-  questions</a>
+<a type="button" id="qA" class="btn btn-secondary" href="{% url 'assignments:question-add' pk%}" 
+    style="margin-bottom: 20px;">Add questions</a>
+
+<a class="btn btn-danger"  data-bs-toggle="modal"
+    href="#quiz_delete_confirmation" style="margin-bottom: 20px; margin-left: 20px;">Delete this quiz</a>
+
 {% endif %}
+</div>
 
+  <div class="modal" tabindex="-1" id="quiz_delete_confirmation">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Delete Confirmation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Do you really want to delete this quiz ?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+          <form action="{% url 'assignments:delete-quiz' course_id%}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="quiz_id" value="{{pk}}">
+            <button type="submit" class="btn btn-primary">Yes</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<hr>
+  {% for msg in messages %}
+  <p class="text-center" style="color: red">{{msg}}</p>
+  {% endfor %}
+
 <div>
-  <p id="result"></p>
+  <p class="text-center" id="result" style="color: red"></p>
 </div>
 <br>
-<form action="" method="post" id="postData">
+
+<div class="container" style="border: 1px solid black; width: 800px; margin-bottom: 20px;">
+
+  <form action="" method="post" id="postData" style="margin-left: 30px; margin-top: 10px;">
 
   {% csrf_token %}
 
@@ -28,7 +103,7 @@
 
   {% if question.question_id.question_image_address %}
   <div>
-    <img src="{{question.question_id.question_image_address.url}}" alt="Image">
+    <img src="{{question.question_id.question_image_address.url}}" style="height: 300px; width:300px" alt="Image">
   </div>
   {% endif %}
   <input type="radio" id="choice_{{question.question_id.question_id}}_1" name="{{question.question_id.question_id}}"
@@ -47,8 +122,8 @@
   <br>
 
   {% if request.user.is_superuser %}
-  <div>
-    <a href="{% url 'assignments:question-update' course_id pk  question.question_id.pk %}">Update</a>
+  <div class="d-flex justify-content-end">
+    <a href="{% url 'assignments:question-update' course_id pk  question.question_id.pk %}" class="btn btn-success">Update</a>
   </div>
   {% endif %}
   <span hidden id={{question.question_id.question_id}}></span>
@@ -62,12 +137,14 @@
   {% endfor %}
 
   {% if questions %}
-  <button type="submit" id="submit">Submit</button>
+  <div class="d-flex justify-content-center">
+  <button type="submit" class="btn btn-primary" id="submit" style="margin: 20px;">Submit</button>
+  </div>
   {% endif %}
 
 
 </form>
-
+</div>
 
 <script src="{% static 'js/attempt_quiz.min.js' %}"></script>
 

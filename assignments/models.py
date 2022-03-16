@@ -1,11 +1,12 @@
 from django.db import models
 from accounts.models import User
-from courses.models import Course
+from curriculum.models import Branch
+
 
 
 class Quiz(models.Model):
     quiz_id = models.AutoField(primary_key=True)
-    course_id = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course_id = models.ForeignKey(Branch, on_delete=models.CASCADE)
     quiz_name = models.CharField(max_length=200)
 
     def __str__(self):
@@ -39,7 +40,7 @@ class Quiz_Questions(models.Model):
 class Results(models.Model):
     quiz_id = models.ForeignKey("Quiz", on_delete=models.CASCADE)
     results_id = models.AutoField(primary_key=True)
-    course_id = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course_id = models.ForeignKey(Branch, on_delete=models.CASCADE)
     date = models.DateTimeField(blank=True, null=True, auto_now_add=True)
     score = models.IntegerField(blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -22,9 +22,9 @@
         <hr style="color:#ff5722;">
 
         <!-- description -->
-        <h4 class="white-text my-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+        <!-- <h4 class="white-text my-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                   Deleniti
-                  consequuntur.</h4>
+                  consequuntur.</h4> -->
   </div>
 </header>
 {% endblock %}
@@ -34,9 +34,9 @@
 
 <section id="best-features" class="text-center">
               <h2 class="mb-5 mt-5 font-weight-bold" style="color:#ff5722;">Dive Into Learning</h2>
-              <!-- class row for description-->
+              <!-- class row for description
               <div class="row d-flex justify-content-center mb-4">
-                <!-- class column -->
+                class column
                 <div class="col-md-8">
                   <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi voluptate
                                     hic
@@ -45,28 +45,43 @@
                                     est
                                     sit pariatur.</p>
                 </div>
-              </div>
+              </div> -->
               <!-- class row2 for cards -->
               <div class="row">
                       {% for Branch in branch_names %}
                       <div class="col-md-4 d-flex mb-5 justify-content-center">
                         <div class="card card-std text-center" style="width: 20rem;">
-                          <div class="card-body text-center">
+                          <div class="card-body text-center" style="background-color: rgb(240, 243, 243);">
+                            <div class="col">
+                              <img src="{{Branch.image.url|default_if_none:'#'}}" class="card-img" alt="No image found" height="200rem"
+                                width="900rem">
+                            </div>
                             <h4 class="card-title" style="color:#ff5722;">{{Branch.name}}</h4>
                             <p class="card-text">{{Branch.description|truncatechars:75}}</p>
                             {% if user.is_authenticated %}
-                            <a href="{% url 'curriculum:subject_list' slug=Branch.slug %}" class="btn btn-primary" style="background-color:#00bcd4;">Lets get started</a>
+                            <a href="{% url 'curriculum:subject_list' slug=Branch.slug %}" class="btn btn-primary" style="border-radius: 50px;">Lets get started</a>
                             
                             {%else%}
                             <p>Register or login to start learning</p>
-                            <a href="{% url 'accounts:login' %}" class="btn btn-std" style="background-color:#00bcd4;">Login</a>
-                            <a href="{% url 'accounts:registration' %}" class="btn btn-primary" style="background-color:#00bcd4;">Register</a>
+                            <a href="{% url 'accounts:login' %}" class="btn btn-std">Login</a>
+                            <a href="{% url 'accounts:registration' %}" class="btn btn-primary">Register</a>
                             {%endif%}
                           </div>
                         </div>
                       </div>
                       {% endfor %}
               </div>
+
+              <!-- <div class="card" style="width: 18rem;">
+                <img src="{{Branch.image.url|default_if_none:'#'}}" class="card-img-top" alt="No image found" height="200px"
+                     width="200px">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div> -->
               
 </section>
 

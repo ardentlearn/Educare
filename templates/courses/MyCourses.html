@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Branch {% endblock %}
+
+{% block content %}
+{% csrf_token %}
+{% if user.is_authenticated %}
+<div class="container">
+    <p class="display-6">My Courses </p>
+    <hr>
+
+{% endif %}
+<div class="row" style="margin-top: 4rem;">
+    <div class='row' style="text-shadow: 2px 2px #e4d9d9;font-family: Arial, Helvetica, sans-serif; font-size: larger;
+    font-weight: bolder;"> 
+    welcome {{ user.first_name }} --
+    </div>
+    {% for course in mycourses %}
+    <div class="col mx-auto">
+        <div class="card mx-auto" style="width: 18rem;">
+            <img class="card-img-top" src="{{course.subject.image.url|default_if_none:'#'}}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{ course.subject.name }}{% if not forloop.last %},{% endif %}</h5>
+                
+            </div>
+
+            <div class="card-footer p-0">
+                
+                <div class="row no-gutters">
+                    
+                    <div class="col border-right">
+                        <a href="/curriculum/{{course.branch_names.slug}}" class="btn btn-light btn-block">Start Course</a>
+                    </div>
+                   
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <span>No course</span>
+    <div class="col border-right">
+        <a href="/curriculum/{{course.branch_names.slug}}" class="btn btn-light btn-block">Enroll in new courses</a>
+    </div>
+    {% endfor %}
+</div>
+</div>
+
+
+{%endblock%}
+
+ 
+    

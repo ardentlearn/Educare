@@ -5,9 +5,18 @@ from accounts.models import User
 import os
 
 # Create your models here.
+def save_branch_image(instance, filename):
+     upload_to = 'images/'
+     ext = filename.split('.')[-1]
+     # get filename
+     if instance.name:
+         filename = 'Branch_Pictures/{}.{}'.format(instance.name, ext)
+     return os.path.join(upload_to, filename)
+
 class Branch(models.Model):
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(null=True, blank=True)
+    image = models.ImageField(upload_to=save_branch_image, blank=True, verbose_name='Branch Image')
     description = models.TextField(max_length=500,blank=True)
 
     def __str__(self):

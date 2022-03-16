@@ -1,16 +1,63 @@
 {% extends 'base.html' %}
-
-
+{% load static %}
 
 {% block title %} Registration {% endblock title %}
 
+{% block css %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}?v=2">
+
+<style>
+        @media(max-width:998px){
+            html {
+                font-size: 85%;
+            }
+            div.box {
+                max-height: 450px;
+                max-width: 380px;
+            }
+        }
+        @media(max-width:768px){
+            html {
+                font-size: 75%;
+            }
+            div.box {
+                max-height: 400px;
+                max-width: 350px;
+            }
+        }
+        @media(max-width:566px){
+            html {
+                font-size: 65%;
+            }
+            div.box {
+                max-height: 380px;
+                max-width: 300px;
+            }
+        }
+        @media(max-width:397px){
+            html {
+                font-size: 55%;
+            }
+            div.box {
+                max-height: 350px;
+                max-width: 280px;
+            }
+        }
+    </style>
+
+{% endblock css %}
 
 {% block content %}
 
+<section id="Image" class="d-flex justify-content-center align-items-center">
+<div class="container position-absolute" data-aos="zoom-in" data-aos-delay="100" style="margin-left: 4%">
 
-<h1 class="text-center" style="margin-top: 40px; margin-left: 700px;">Register</h1>
+<div class="box align-self-center mx-auto" style="height: 500px; width: 420px; background-color: rgb(180, 180, 180); border-radius: 0% 10% 0% 10%">
 
-<form action="" method="post" class="box" style="width: 500px; padding: 40px; margin-top: 10px; position: absolute; margin-left: 800px; background: rgb(87, 241, 234)">
+<h1 class="text-center" style="margin:30px;padding: 10px;">Register</h1>
+
+<form action="" method="post" style="width: 500px; padding: 20px; margin-top: 10px;">
     
     {% csrf_token %}
 
@@ -18,36 +65,53 @@
     {{form.errors}}
     {% endif %}
 
-    <div class="form-row">
-    <div class="form-group mb-3">
-    {{form.email.label}}
-    {{form.email}}
-    </div>
-    <br>
-    <div class="form-group mb-3">
-    {{form.first_name.label}}
-    {{form.first_name}}
-    </div>
-    <br>
-    <div class="form-group mb-3">
-    {{form.last_name.label}}
-    {{form.last_name}}
-    </div>
-    <br>
-    <div class="form-group mb-3">
-    {{form.password1.label}}
-    {{form.password1}}
-    </div>
-    <br>
-    <div class="form-group mb-3">
-    {{form.password2.label}}
-    {{form.password2}}
-    </div>
-    <br>
-    
-    <button type="submit" class="btn btn-primary" style="margin-left: 150px">Submit</button>
+        <div class="form-group row">
+            <div class="col-sm-3 w-25">
+                {{form.email.label}}
+            </div>
+            <div class="col-sm-8 w-75">  
+                {{form.email}}
+            </div>
+        </div>
+        <div class="form-group row mt-4">
+            <div class="col-sm-3 w-25">
+                {{form.first_name.label}}
+            </div>
+            <div class="col-sm-8 w-75">    
+                {{form.first_name}}
+            </div>
+        </div>
+        <div class="form-group row mt-4">
+            <div class="col-sm-3 w-25">
+                {{form.last_name.label}}
+            </div>
+            <div class="col-sm-8 w-75">  
+                {{form.last_name}}
+            </div>
+        </div>
+        <div class="form-group row mt-4">
+            <div class="col-sm-3 w-25">
+                {{form.password1.label}}
+            </div>
+            <div class="col-sm-8 w-75"> 
+                {{form.password1}}
+            </div>
+        </div>
+        <div class="form-group row mt-4">
+            <div class="col-sm-3 w-25">
+                {{form.password2.label}}
+            </div>
+            <div class="col-sm-8 w-75">  
+                {{form.password2}}
+            </div>
+        </div>
+           
+        <button type="submit" class="btn btn-dark" style="margin-left: 100px ;margin-top: 40px">Submit</button>
+       
     </div>
 </form>
-
+</div>
+</div>
+</section>
 
 {% endblock content %}

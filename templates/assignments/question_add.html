@@ -1,45 +1,89 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Add questions{% endblock title %}
 
+{% block css %}
+
+<style>
+  @media(max-width:998px){
+        html {
+            font-size: 75%;
+        }
+        div.container {
+          max-width: 700px;
+        }
+    }
+  @media(max-width:768px){
+        html {
+            font-size: 65%;
+        }
+        div.container {
+          max-width: 550px;
+        }
+    }
+    @media(max-width:566px){
+        html {
+            font-size: 55%;
+        }
+        div.container {
+          max-width: 400px;
+        }
+    }
+    @media(max-width:397px){
+        html {
+            font-size: 50%;
+        }
+        img {
+          max-width: 200px;
+          max-height: 200px;
+        }
+        div.container {
+          max-width: 300px;
+        }
+    }
+</style>
+
+{% endblock css %}
+
 {% block content %}
 
-<div class="container">
+<h1 class="text-center" style="margin-top: 100px">Add new questions</h1>
 
 {% for msg in messages %}
-<p>{{msg}}</p>
+<p class="text-center" style="color: red">{{msg}}</p>
 {% endfor %}
 
-
-    <p class="display-3 text-center">Add new questions</p>
-    <hr>
-
-    <form action="" method="post" enctype="multipart/form-data">
+<div class="container" style="border: 1px solid black; width: 800px; margin-bottom: 20px;">
+    
+    <form action="" method="post" enctype="multipart/form-data" style="margin: 10px">
         {% csrf_token %}
 
         {{form.question_description.label}}
         {{form.question_description}}
-        <br>
+        <br><br>
         {{form.choice_1.label}}
         {{form.choice_1}}
-        <br>
+        <br><br>
         {{form.choice_2.label}}
         {{form.choice_2}}
-        <br>
+        <br><br>
         {{form.choice_3.label}}
         {{form.choice_3}}
-        <br>
+        <br><br>
         {{form.choice_4.label}}
         {{form.choice_4}}
-        <br>
+        <br><br>
         {{form.correct_choice.label}}
         {{form.correct_choice}}
-        <br>
+        <br><br>
         <p>Question Image</p>
         {{form.question_image_address}}
 
-        <br>
-        <button type="submit" class="btn btn-primary px-4">Add</button>
+        <br><br>
+        <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary px-4" style="margin: 20px;">Add</button>
+        </div>
     </form>
 
 

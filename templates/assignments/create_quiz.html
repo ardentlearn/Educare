@@ -5,9 +5,9 @@
 {% block content %}
 
 
-<h1>Create new quiz</h1>
-<hr>
+<h1 class="text-center" style="margin-top: 150px">Create new quiz</h1>
 
+<div class="container" style="width:400px; margin-top: 50px;">
 <form action="" method="post">
 {% csrf_token %}
 
@@ -18,6 +18,6 @@
 <button type="submit" class="btn btn-primary">Submit</button>
 
 </form>
-
+</div>
 
 {% endblock content %}
